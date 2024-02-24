@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import InfoMarker from "../components/InfoMarker";
 import IconMarker from "../components/IconMarker";
-import { getUAdress } from "./MedicineBox";
+import { getAllLocations } from "./MedicineBox";
 import GeoCoder from "./GeoCoder";
 
 const Map = () => {
@@ -16,9 +16,14 @@ const Map = () => {
   const telNumber = "234";
 
   const getAddress = async () => {
-    const YuSeongAddress = await getUAdress(1);
-    for (let i = 0; i < YuSeongAddress.data.length; i += 1) {
-      GeoCoder(YuSeongAddress.data[i].도로명주소, map);
+    const YuSeongAddress = await getAllLocations();
+    // const YuSeongAddress = await getUAdress(2);
+    // for (let i = 0; i < YuSeongAddress.data.length; i += 1) {
+    //   GeoCoder(YuSeongAddress.data[i].도로명주소, map);
+    // }
+    console.log(YuSeongAddress);
+    for (let i = 0; i < YuSeongAddress.length; i += 1) {
+      GeoCoder(YuSeongAddress[i].도로명주소, map);
     }
   };
 
@@ -50,6 +55,7 @@ const Map = () => {
     //   animation: naver.maps.Animation.DROP,
     // });
     getAddress();
+    // getAllLocations();
   }, []);
   // map.setCenter(jeju)
 

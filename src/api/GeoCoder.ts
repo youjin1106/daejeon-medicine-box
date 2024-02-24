@@ -12,7 +12,7 @@ const GeoCoder = (도로명주소: string, map: naver.maps.Map) => {
 
       const result = response.v2; // 검색 결과의 컨테이너
       const { x, y } = result.addresses[0]; // 검색 결과의 배열
-      console.log(result.addresses[0]);
+      // console.log(result.addresses[0]);
       new naver.maps.Marker({
         position: new naver.maps.LatLng(Number(y), Number(x)),
         map,
