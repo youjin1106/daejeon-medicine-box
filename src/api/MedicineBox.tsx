@@ -55,6 +55,56 @@ const getUAdress = async (
   // console.log(result);
 };
 
+const getSeoguAdress = async (
+  targetPage: number,
+  array: Array<LocationRequestResult>
+) => {
+  const res = await axios({
+    url: baseURL + SEOGU_GET_URL,
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Infuser ${AddressAPIKEY}`,
+    },
+    params: { page: targetPage },
+  });
+  // console.log(res.data);
+  const { page, totalCount, data } = res.data;
+  console.log(page, totalCount, data);
+  // result.push(data)
+  // array.push(...data);
+  if (targetPage === 1) {
+    array.push(...data);
+  }
+
+  if (page * 10 < totalCount) {
+    // array.push(...res.data.data);
+    const { data } = await getUAdress(page + 1, array);
+    if (data) {
+      array.push(...data);
+    }
+  }
+  return res.data;
+  // console.log(result);
+};
+
+const transLocationToUrl = (location: string): string => {
+  switch (location) {
+    case "유성구":
+      return YUSEONGGU_GET_URL;
+    case "서구":
+      return SEOGU_GET_URL;
+    case "동구":
+      return DONGGU_GET_URL;
+    case "대덕구":
+      return DAEDUCKGU_GET_URL;
+    case "중구":
+      return JUNGGU_GET_URL;
+    default:
+      return SEOGU_GET_URL;
+  }
+};
+
 const getAllLocations = async (): Promise<LocationRequestResult[]> => {
   const array: Array<LocationRequestResult> = [];
   await getUAdress(1, array);
