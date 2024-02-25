@@ -1,7 +1,12 @@
 import GeoCoder from "../api/GeoCoder";
 import { getAllLocations } from "../api/MedicineBox";
 
-const LocationMenu = ({ map }) => {
+type MapProps = {
+  map: naver.maps.Map;
+};
+
+const LocationMenu: React.FC<MapProps> = (props) => {
+  const { map } = props;
   const handleClickSeogu = () => {};
   const handleClickYuseonggu = () => {
     getAddress();
