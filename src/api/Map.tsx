@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { MouseEvent, useEffect, useRef, useState } from "react";
 // import InfoMarker from "../components/InfoMarker";
 // import IconMarker from "../components/IconMarker";
 import { getAllLocations } from "./MedicineBox";
-import GeoCoder from "./GeoCoder";
+import GeoCoder, { GeoCoder2 } from "./GeoCoder";
 import LocationMenu from "../components/LocationMenu";
 
 const Map = () => {
@@ -17,13 +17,14 @@ const Map = () => {
   // const address = "내주소";
   // const telNumber = "234";
 
-  const getAddress = async (e: React.MouseEvent<HTMLDivElement>) => {
+  const getAddress = async (e: MouseEvent<HTMLDivElement>) => {
     const location = e.currentTarget.getAttribute("data-id");
     console.log(location);
     if (location) {
       const YuSeongAddress = await getAllLocations(location);
       for (let i = 0; i < YuSeongAddress.length; i += 1) {
-        map && GeoCoder(YuSeongAddress[i].도로명주소, map);
+        map && GeoCoder(map, YuSeongAddress[i]);
+        // map && GeoCoder2(YuSeongAddress[i].도로명주소, map);
       }
     } else {
       console.error("data-id 속성이 존재하지 않음");

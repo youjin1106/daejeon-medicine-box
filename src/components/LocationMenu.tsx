@@ -20,7 +20,7 @@ const LocationMenu: React.FC<MapProps> = (props) => {
     // }
     console.log(YuSeongAddress);
     for (let i = 0; i < YuSeongAddress.length; i += 1) {
-      GeoCoder(YuSeongAddress[i].도로명주소, map);
+      GeoCoder(YuSeongAddress[i].도로명주소, map, YuSeongAddress[i]);
     }
   };
 
