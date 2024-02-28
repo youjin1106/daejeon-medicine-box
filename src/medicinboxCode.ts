@@ -1,6 +1,16 @@
 export const medicineboxCode = () => {};
 
-export const 서구_수거함_좌표 = [
+export type 수거함_정보 = {
+  시군구명: string;
+  위치명: string;
+  도로명주소: string;
+  지번주소: string;
+  x: number;
+  y: number;
+  전화번호: string | null | undefined;
+};
+
+export const 서구_수거함_좌표: 수거함_정보[] = [
   {
     시군구명: "서구",
     위치명: "기쁨가득한약국",
@@ -740,7 +750,7 @@ export const 서구_수거함_좌표 = [
     전화번호: "",
   },
 ];
-export const 유성구_수거함_좌표 = [
+export const 유성구_수거함_좌표: 수거함_정보[] = [
   {
     시군구명: "유성구",
     위치명: "유성구보건소",
