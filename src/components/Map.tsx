@@ -7,7 +7,7 @@ const Map = () => {
   const [map, setMap] = useState<naver.maps.Map | null>();
   const initializeMap = () => {
     if (!mapEl.current || !naver) return;
-    const firstLocation = new naver.maps.LatLng(36.2998001, 127.3163538);
+    const firstLocation = new naver.maps.LatLng(36.355504, 127.383844);
     const mapOptions = {
       center: firstLocation,
       zoom: 16,
