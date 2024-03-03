@@ -38,7 +38,7 @@ const LocationMenu = (props: MapProps) => {
           icon: {
             content: IconMarker(),
             size: new naver.maps.Size(38, 58),
-            anchor: new naver.maps.Point(19, 58),
+            anchor: new naver.maps.Point(15, 20),
           },
           clickable: true,
           animation: naver.maps.Animation.DROP,
@@ -77,7 +77,8 @@ const LocationMenu = (props: MapProps) => {
     for (let i = 0; i < markers.length; i++) {
       marker = markers[i];
       position = marker.getPosition();
-
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       if (mapBounds && mapBounds.hasLatLng(position)) {
         showMarker(map, marker);
       } else {
