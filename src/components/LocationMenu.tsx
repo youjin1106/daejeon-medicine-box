@@ -1,13 +1,10 @@
 import { MouseEvent } from "react";
-import GeoCoder from "../api/GeoCoder";
-import { getAllLocations } from "../api/MedicineBox";
 import {
   대덕구_수거함_좌표,
   동구_수거함_좌표,
   서구_수거함_좌표,
   유성구_수거함_좌표,
   중구_수거함_좌표,
-  수거함_정보,
 } from "../medicinboxCode";
 import IconMarker from "./IconMarker";
 
@@ -18,6 +15,7 @@ type MapProps = {
 const LocationMenu = (props: MapProps) => {
   const { map } = props;
   const markers: naver.maps.Marker[] = [];
+  const infoWindows: naver.maps.InfoWindow[] = [];
   const getAddress = async (e: MouseEvent<HTMLLIElement>) => {
     const location_data_id = e.currentTarget.getAttribute("data-id");
     if (location_data_id) {
@@ -40,12 +38,71 @@ const LocationMenu = (props: MapProps) => {
           clickable: true,
           animation: naver.maps.Animation.DROP,
         });
+
+        const infoWindow = new naver.maps.InfoWindow({
+          content: `<div class="flex flex-col bg-white w-fit p-[18px] border-solid border-[1px]">
+          <span class="font-bold text-xl mb-2">${location_info[i].위치명}</span>
+          <span>${location_info[i].도로명주소}</span>
+          <span>${
+            validateTelNum(location_info[i].전화번호) &&
+            location_info[i].전화번호
+          }</span>
+          </div>`,
+          borderWidth: 0,
+          disableAnchor: true,
+          backgroundColor: "transparent",
+        });
+
         markers.push(marker);
+        infoWindows.push(infoWindow);
+        naver.maps.Event.addListener(marker, "click", getClickHandler(i));
       }
     } else {
       Error("data-id 속성이 존재하지 않음");
     }
   };
+
+  naver.maps.Event.addListener(map, "idle", function () {
+    updateMarkers(map, markers);
+  });
+
+  function updateMarkers(map: naver.maps.Map, markers: naver.maps.Marker[]) {
+    const mapBounds: naver.maps.Bounds = map.getBounds();
+    let marker, position;
+    for (let i = 0; i < markers.length; i++) {
+      marker = markers[i];
+      position = marker.getPosition();
+
+      if (mapBounds && mapBounds.hasLatLng(position)) {
+        showMarker(map, marker);
+      } else {
+        hideMarker(map, marker);
+      }
+    }
+  }
+
+  function showMarker(map: naver.maps.Map, marker: naver.maps.Marker) {
+    if (marker.getMap()) return;
+    marker.setMap(map);
+  }
+
+  function hideMarker(map: naver.maps.Map, marker: naver.maps.Marker) {
+    if (!marker.getMap()) return;
+    marker.setMap(null);
+  }
+
+  function getClickHandler(index: number) {
+    return function () {
+      const marker = markers[index],
+        infoWindow = infoWindows[index];
+
+      if (infoWindow.getMap()) {
+        infoWindow.close();
+      } else {
+        infoWindow.open(map, marker);
+      }
+    };
+  }
 
   const transLocationToUrl = (location: string) => {
     switch (location) {
@@ -63,6 +120,19 @@ const LocationMenu = (props: MapProps) => {
         return 서구_수거함_좌표;
     }
   };
+
+  function validateTelNum(checkNumber: string | null | undefined) {
+    if (
+      checkNumber === "" ||
+      checkNumber === "undefined" ||
+      checkNumber === "null" ||
+      checkNumber === null ||
+      checkNumber === undefined
+    ) {
+      return "";
+    }
+    return checkNumber;
+  }
 
   return (
     <ul className="flex flex-row ">

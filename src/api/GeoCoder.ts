@@ -4,7 +4,7 @@ let all = "";
 const GeoCoder = (map: naver.maps.Map, info) => {
   naver.maps.Service.geocode(
     {
-      query: info.주소,
+      query: "대전광역시 중구",
     },
     function (status, response) {
       if (status !== naver.maps.Service.Status.OK) {
@@ -16,6 +16,7 @@ const GeoCoder = (map: naver.maps.Map, info) => {
       // console.log(result.addresses[0]);
       // console.log(동구_수거함_좌표.length);
       //동구
+      console.log(x, y, jibunAddress);
       all += `{시군구명: '동구',위치명:'${info.명칭}' ,도로명주소: '${info.주소}', 지번주소: '${jibunAddress}', x: ${y} , y: ${x}, 전화번호:"${info.전화번호}" },\n`;
       //중구
       // all += `{시군구명: '중구',위치명:'${info.구분}' ,도로명주소: '${info.주소지}', 지번주소: '${jibunAddress}', x: ${y} , y: ${x}, 전화번호:"${info.전화번호}" },\n`;

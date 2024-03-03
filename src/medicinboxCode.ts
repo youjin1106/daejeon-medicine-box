@@ -10,6 +10,41 @@ export type 수거함_정보 = {
   전화번호: string | null | undefined;
 };
 
+export type 지역구_지도_좌표 = {
+  서구: GeoCode;
+  유성구: GeoCode;
+  동구: GeoCode;
+  대덕구: GeoCode;
+  중구: GeoCode;
+};
+export type GeoCode = {
+  x: number;
+  y: number;
+};
+
+export const 지역구_지도_좌표 = {
+  서구: {
+    x: 36.355504,
+    y: 127.383844,
+  },
+  유성구: {
+    x: 36.362322,
+    y: 127.356268,
+  },
+  동구: {
+    x: 36.312169,
+    y: 127.454884,
+  },
+  대덕구: {
+    x: 36.346735,
+    y: 127.415502,
+  },
+  중구: {
+    x: 36.325659,
+    y: 127.421546,
+  },
+};
+
 export const 서구_수거함_좌표: 수거함_정보[] = [
   {
     시군구명: "서구",
