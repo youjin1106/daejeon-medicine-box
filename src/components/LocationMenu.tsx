@@ -46,12 +46,12 @@ const LocationMenu = (props: MapProps) => {
 
         const infoWindow = new naver.maps.InfoWindow({
           content: `<div class="flex flex-col bg-white w-fit p-[18px] border-solid border-[1px]">
-          <span class="font-bold text-xl mb-2">${location_info[i].위치명}</span>
-          <span>${location_info[i].도로명주소}</span>
-          <span>${
+          <p class="font-bold text-xl mb-2">${location_info[i].위치명}</p>
+          <p>${location_info[i].도로명주소}</p>
+          <p>${
             validateTelNum(location_info[i].전화번호) &&
             location_info[i].전화번호
-          }</span>
+          }</p>
           </div>`,
           borderWidth: 0,
           disableAnchor: true,
