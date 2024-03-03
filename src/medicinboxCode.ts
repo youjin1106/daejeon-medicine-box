@@ -1,5 +1,3 @@
-export const medicineboxCode = () => {};
-
 export type 수거함_정보 = {
   시군구명: string;
   위치명: string;

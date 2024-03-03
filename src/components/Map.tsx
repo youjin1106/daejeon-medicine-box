@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import LocationMenu from "../components/LocationMenu";
+import LocationMenu from "./LocationMenu";
 
 const Map = () => {
   const mapEl = useRef(null);
