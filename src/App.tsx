@@ -1,6 +1,5 @@
-import GeoCoder from "./api/GeoCoder";
 import Map from "./api/Map";
-import { getUAdress } from "./api/MedicineBox";
+import Footer from "./components/Footer";
 import Header from "./components/Header";
 
 function App() {
@@ -8,6 +7,7 @@ function App() {
     <>
       <Header />
       <Map />
+      <Footer />
     </>
   );
 }

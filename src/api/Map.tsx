@@ -1,6 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-// import InfoMarker from "../components/InfoMarker";
-// import IconMarker from "../components/IconMarker";
 import LocationMenu from "../components/LocationMenu";
 
 const Map = () => {
