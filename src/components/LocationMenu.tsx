@@ -16,6 +16,7 @@ const LocationMenu = (props: MapProps) => {
   const { map } = props;
   const markers: naver.maps.Marker[] = [];
   const infoWindows: naver.maps.InfoWindow[] = [];
+
   const getAddress = async (e: MouseEvent<HTMLLIElement>) => {
     const location_data_id = e.currentTarget.getAttribute("data-id");
     if (location_data_id) {
@@ -135,20 +136,28 @@ const LocationMenu = (props: MapProps) => {
   }
 
   return (
-    <ul className="flex flex-row ">
-      <li onClick={getAddress} data-id="서구">
+    <ul className="flex flex-row mx-auto font-semibold text-gray-700">
+      <li onClick={getAddress} data-id="서구" className="text-[25px] py-2 px-4">
         서구
       </li>
-      <li onClick={getAddress} data-id="유성구">
+      <li
+        onClick={getAddress}
+        data-id="유성구"
+        className="text-[25px] p-2 px-4"
+      >
         유성구
       </li>
-      <li onClick={getAddress} data-id="중구">
+      <li onClick={getAddress} data-id="중구" className="text-[25px] py-2 px-4">
         중구
       </li>
-      <li onClick={getAddress} data-id="대덕구">
+      <li
+        onClick={getAddress}
+        data-id="대덕구"
+        className="text-[25px] py-2 px-4"
+      >
         대덕구
       </li>
-      <li onClick={getAddress} data-id="동구">
+      <li onClick={getAddress} data-id="동구" className="text-[25px] py-2 px-4">
         동구
       </li>
     </ul>
