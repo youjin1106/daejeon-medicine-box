@@ -82,7 +82,7 @@ const LocationMenu = (props: MapProps) => {
       if (mapBounds && mapBounds.hasLatLng(position)) {
         showMarker(map, marker);
       } else {
-        hideMarker(map, marker);
+        hideMarker(marker);
       }
     }
   }
@@ -92,7 +92,7 @@ const LocationMenu = (props: MapProps) => {
     marker.setMap(map);
   }
 
-  function hideMarker(map: naver.maps.Map, marker: naver.maps.Marker) {
+  function hideMarker(marker: naver.maps.Marker) {
     if (!marker.getMap()) return;
     marker.setMap(null);
   }
