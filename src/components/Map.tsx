@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import LocationMenu from "./LocationMenu";
 import useGeoLocation from "./useGeoLocation";
+import MyLocation from "./MyLocation";
 
 const Map = () => {
   const mapEl = useRef(null);
@@ -33,6 +34,7 @@ const Map = () => {
   return (
     <>
       <div>
+        {map && <MyLocation map={map} />}
         {position.loaded
           ? `${position.coordinates?.latitude}과 ${position.coordinates?.longitude}`
           : "위치를 불러오는 중입니다..."}

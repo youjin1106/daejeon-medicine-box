@@ -9,7 +9,7 @@ import {
 } from "../medicinboxCode";
 import IconMarker from "./IconMarker";
 
-type MapProps = {
+export type MapProps = {
   map: naver.maps.Map;
 };
 
