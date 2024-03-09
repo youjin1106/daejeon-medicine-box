@@ -15,8 +15,8 @@ export type MapProps = {
 
 const LocationMenu = (props: MapProps) => {
   const { map } = props;
-  const markers: naver.maps.Marker[] = [];
-  const infoWindows: naver.maps.InfoWindow[] = [];
+  let markers: naver.maps.Marker[] = [];
+  let infoWindows: naver.maps.InfoWindow[] = [];
 
   const getAddress = async (e: MouseEvent<HTMLLIElement>) => {
     const location_data_id = e.currentTarget.getAttribute("data-id");
@@ -27,6 +27,8 @@ const LocationMenu = (props: MapProps) => {
       map.setCenter(centerCode);
       if (markers.length > 0) {
         markers.map((marker) => marker.setMap(null));
+        markers = [];
+        infoWindows = [];
       }
       for (let i = 0; i < location_info.length; i += 1) {
         const marker = new naver.maps.Marker({
