@@ -7,7 +7,7 @@ const Map = () => {
   const mapEl = useRef(null);
   const { naver } = window;
   const [map, setMap] = useState<naver.maps.Map | null>();
-  const position = useGeoLocation();
+  // const position = useGeoLocation();
   const initializeMap = () => {
     if (!mapEl.current || !naver) return;
     const firstLocation = new naver.maps.LatLng(36.355504, 127.383844);
@@ -35,9 +35,9 @@ const Map = () => {
     <>
       <div>
         {map && <MyLocation map={map} />}
-        {position.loaded
+        {/* {position.loaded
           ? `${position.coordinates?.latitude}과 ${position.coordinates?.longitude}`
-          : "위치를 불러오는 중입니다..."}
+          : "위치를 불러오는 중입니다..."} */}
       </div>
       <div className="flex flex-row">{map && <LocationMenu map={map} />}</div>
       <div ref={mapEl} className="mx-auto" />

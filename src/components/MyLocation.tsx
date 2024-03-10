@@ -28,51 +28,56 @@ const MyLocation = (props: MapProps) => {
   const distanceList = [];
   const infoWindows: naver.maps.InfoWindow[] = [];
 
-  for (let i = 0; i < all_location.length; i += 1) {
-    const distance =
-      Math.abs(all_location[i].x - myLocation_x) +
-      Math.abs(all_location[i].y - myLocation_y);
-    if (markerList.length < 5) {
-      markerList.push(all_location[i]);
-      distanceList.push(distance);
-    } else {
-      for (let j = 0; j < markerList.length; j += 1) {
-        if (distanceList[j] > distance) {
-          markerList[j] = all_location[i];
-          distanceList[j] = distance;
-          break;
+  if (position.loaded) {
+    for (let i = 0; i < all_location.length; i += 1) {
+      const distance =
+        Math.abs(all_location[i].x - myLocation_x) +
+        Math.abs(all_location[i].y - myLocation_y);
+      if (markerList.length < 10) {
+        markerList.push(all_location[i]);
+        distanceList.push(distance);
+      } else {
+        for (let j = 0; j < markerList.length; j += 1) {
+          if (distanceList[j] > distance) {
+            markerList[j] = all_location[i];
+            distanceList[j] = distance;
+            break;
+          }
         }
       }
     }
+
+    for (let i = 0; i < markerList.length; i += 1) {
+      const marker = new naver.maps.Marker({
+        position: new naver.maps.LatLng(markerList[i].x, markerList[i].y),
+        map,
+        icon: {
+          content: IconMarker(),
+          size: new naver.maps.Size(38, 58),
+          anchor: new naver.maps.Point(15, 20),
+        },
+        clickable: true,
+        animation: naver.maps.Animation.DROP,
+      });
+
+      const infoWindow = new naver.maps.InfoWindow({
+        content: `<div class="flex flex-col bg-white w-fit p-[18px] border-solid border-[1px]">
+        <p class="font-bold text-xl mb-2">${markerList[i].위치명}</p>
+        <p>${markerList[i].도로명주소}</p>
+        <p>${
+          validateTelNum(markerList[i].전화번호) && markerList[i].전화번호
+        }</p>
+        </div>`,
+        borderWidth: 0,
+        disableAnchor: true,
+        backgroundColor: "transparent",
+      });
+
+      infoWindows.push(infoWindow);
+      naver.maps.Event.addListener(marker, "click", getClickHandler(i));
+    }
   }
 
-  for (let i = 0; i < markerList.length; i += 1) {
-    const marker = new naver.maps.Marker({
-      position: new naver.maps.LatLng(markerList[i].x, markerList[i].y),
-      map,
-      icon: {
-        content: IconMarker(),
-        size: new naver.maps.Size(38, 58),
-        anchor: new naver.maps.Point(15, 20),
-      },
-      clickable: true,
-      animation: naver.maps.Animation.DROP,
-    });
-
-    const infoWindow = new naver.maps.InfoWindow({
-      content: `<div class="flex flex-col bg-white w-fit p-[18px] border-solid border-[1px]">
-      <p class="font-bold text-xl mb-2">${markerList[i].위치명}</p>
-      <p>${markerList[i].도로명주소}</p>
-      <p>${validateTelNum(markerList[i].전화번호) && markerList[i].전화번호}</p>
-      </div>`,
-      borderWidth: 0,
-      disableAnchor: true,
-      backgroundColor: "transparent",
-    });
-
-    infoWindows.push(infoWindow);
-    naver.maps.Event.addListener(marker, "click", getClickHandler(i));
-  }
   function getClickHandler(index: number) {
     return function () {
       const marker = markerList[index],
