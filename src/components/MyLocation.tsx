@@ -103,7 +103,7 @@ const MyLocation = (props: MapProps) => {
     }
     return checkNumber;
   }
-  return <div>test MyLocation</div>;
+  return;
 };
 
 export default MyLocation;

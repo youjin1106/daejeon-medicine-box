@@ -11,7 +11,7 @@ const Map = () => {
     const firstLocation = new naver.maps.LatLng(36.355504, 127.383844);
     const mapOptions = {
       center: firstLocation,
-      zoom: 14,
+      zoom: 15,
       minZoom: 14,
       maxZoom: 18,
       zoomControl: true,

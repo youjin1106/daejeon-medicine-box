@@ -27,6 +27,7 @@ const useGeoLocation = () => {
   const getPositionError = () => {
     setPosition({
       loaded: true,
+      coordinates: { latitude: 36.355504, longitude: 127.383844 },
       error:
         "현재 위치를 확인할 수 없습니다. 위의 메뉴에서 지역을 직접 선택해주세요.",
     });
