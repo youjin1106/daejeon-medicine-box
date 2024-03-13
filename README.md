@@ -26,4 +26,5 @@ TailwindCSS  </br>
 
 ## 프로젝트 관련 블로깅
 [프로젝트 회고](https://velog.io/@jjnote22/dj-old-medicine-map-log)
+</br>
 [TypeScript switch문을 객체 리터럴로 리팩토링하기](https://velog.io/@jjnote22/TypeScript-switch-to-object-literal)
