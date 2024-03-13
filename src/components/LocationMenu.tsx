@@ -9,7 +9,6 @@ import {
   수거함_정보,
 } from "../medicinboxCode";
 import IconMarker from "./IconMarker";
-import useLocationStore from "../store/useLocationStore";
 
 export type MapProps = {
   map: naver.maps.Map;
@@ -19,7 +18,6 @@ const LocationMenu = (props: MapProps) => {
   const { map } = props;
   let markers: naver.maps.Marker[] = [];
   let infoWindows: naver.maps.InfoWindow[] = [];
-  const { locations } = useLocationStore();
 
   const getAddress = async (e: MouseEvent<HTMLLIElement>) => {
     const location_data_id = e.currentTarget.getAttribute("data-id");
