@@ -6,27 +6,34 @@ import {
   유성구_수거함_좌표,
   중구_수거함_좌표,
   지역구_지도_좌표,
+  수거함_정보,
 } from "../medicinboxCode";
 import IconMarker from "./IconMarker";
 
-type MapProps = {
+export type MapProps = {
   map: naver.maps.Map;
 };
 
 const LocationMenu = (props: MapProps) => {
   const { map } = props;
-  const markers: naver.maps.Marker[] = [];
-  const infoWindows: naver.maps.InfoWindow[] = [];
+  let markers: naver.maps.Marker[] = [];
+  let infoWindows: naver.maps.InfoWindow[] = [];
 
   const getAddress = async (e: MouseEvent<HTMLLIElement>) => {
     const location_data_id = e.currentTarget.getAttribute("data-id");
     if (location_data_id) {
-      const location_info = transLocationToUrl(location_data_id).수거함_좌표;
-      const center = transLocationToUrl(location_data_id).지역중앙_좌표;
+      const location_info = transLocationToUrl2(
+        location_data_id as 지역
+      ).수거함_좌표;
+      const center = transLocationToUrl2(
+        location_data_id as 지역
+      ).지역중앙_좌표;
       const centerCode = new naver.maps.LatLng(center.x, center.y);
       map.setCenter(centerCode);
       if (markers.length > 0) {
         markers.map((marker) => marker.setMap(null));
+        markers = [];
+        infoWindows = [];
       }
       for (let i = 0; i < location_info.length; i += 1) {
         const marker = new naver.maps.Marker({
@@ -110,39 +117,73 @@ const LocationMenu = (props: MapProps) => {
     };
   }
 
-  const transLocationToUrl = (location: string) => {
-    switch (location) {
-      case "유성구":
-        return {
-          수거함_좌표: 유성구_수거함_좌표,
-          지역중앙_좌표: 지역구_지도_좌표.유성구,
-        };
-      case "서구":
-        return {
-          수거함_좌표: 서구_수거함_좌표,
-          지역중앙_좌표: 지역구_지도_좌표.서구,
-        };
-      case "동구":
-        return {
-          수거함_좌표: 동구_수거함_좌표,
-          지역중앙_좌표: 지역구_지도_좌표.동구,
-        };
-      case "대덕구":
-        return {
-          수거함_좌표: 대덕구_수거함_좌표,
-          지역중앙_좌표: 지역구_지도_좌표.대덕구,
-        };
-      case "중구":
-        return {
-          수거함_좌표: 중구_수거함_좌표,
-          지역중앙_좌표: 지역구_지도_좌표.중구,
-        };
-      default:
-        return {
-          수거함_좌표: 서구_수거함_좌표,
-          지역중앙_좌표: 지역구_지도_좌표.서구,
-        };
-    }
+  // const transLocationToUrl = (location: string) => {
+  //   switch (location) {
+  //     case "유성구":
+  //       return {
+  //         수거함_좌표: 유성구_수거함_좌표,
+  //         지역중앙_좌표: 지역구_지도_좌표.유성구,
+  //       };
+  //     case "서구":
+  //       return {
+  //         수거함_좌표: 서구_수거함_좌표,
+  //         지역중앙_좌표: 지역구_지도_좌표.서구,
+  //       };
+  //     case "동구":
+  //       return {
+  //         수거함_좌표: 동구_수거함_좌표,
+  //         지역중앙_좌표: 지역구_지도_좌표.동구,
+  //       };
+  //     case "대덕구":
+  //       return {
+  //         수거함_좌표: 대덕구_수거함_좌표,
+  //         지역중앙_좌표: 지역구_지도_좌표.대덕구,
+  //       };
+  //     case "중구":
+  //       return {
+  //         수거함_좌표: 중구_수거함_좌표,
+  //         지역중앙_좌표: 지역구_지도_좌표.중구,
+  //       };
+  //     default:
+  //       return {
+  //         수거함_좌표: 서구_수거함_좌표,
+  //         지역중앙_좌표: 지역구_지도_좌표.서구,
+  //       };
+  //   }
+  // };
+
+  type 지역 = "유성구" | "서구" | "동구" | "대덕구" | "중구";
+  type TranslatedType = {
+    [index in 지역]: {
+      수거함_좌표: 수거함_정보[];
+      지역중앙_좌표: { x: number; y: number };
+    };
+  };
+  const transLocationToUrl2 = (location: 지역) => {
+    const translated: TranslatedType = {
+      유성구: {
+        수거함_좌표: 유성구_수거함_좌표,
+        지역중앙_좌표: 지역구_지도_좌표.유성구,
+      },
+      서구: {
+        수거함_좌표: 서구_수거함_좌표,
+        지역중앙_좌표: 지역구_지도_좌표.서구,
+      },
+      동구: {
+        수거함_좌표: 동구_수거함_좌표,
+        지역중앙_좌표: 지역구_지도_좌표.동구,
+      },
+      대덕구: {
+        수거함_좌표: 대덕구_수거함_좌표,
+        지역중앙_좌표: 지역구_지도_좌표.대덕구,
+      },
+      중구: {
+        수거함_좌표: 중구_수거함_좌표,
+        지역중앙_좌표: 지역구_지도_좌표.중구,
+      },
+    };
+
+    return translated[location];
   };
 
   function validateTelNum(checkNumber: string | null | undefined) {

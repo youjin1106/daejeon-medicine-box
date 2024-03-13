@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import LocationMenu from "./LocationMenu";
+import MyLocation from "./MyLocation";
 
 const Map = () => {
   const mapEl = useRef(null);
@@ -10,7 +11,7 @@ const Map = () => {
     const firstLocation = new naver.maps.LatLng(36.355504, 127.383844);
     const mapOptions = {
       center: firstLocation,
-      zoom: 16,
+      zoom: 15,
       minZoom: 14,
       maxZoom: 18,
       zoomControl: true,
@@ -30,6 +31,7 @@ const Map = () => {
 
   return (
     <>
+      <div>{map && <MyLocation map={map} />}</div>
       <div className="flex flex-row">{map && <LocationMenu map={map} />}</div>
       <div ref={mapEl} className="mx-auto" />
     </>
